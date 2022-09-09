@@ -8,10 +8,4 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
     </head>
     <body>
-        <form action="/add.php" method="POST">
-            <input class="input" type="text" name="newitem" required>
-            <textarea class="textarea" name="body"></textarea>
-            <input class="button is-primary" type="submit" value="Add">
-        </form>
-    </body>
-</html>
+        <div class="container">
