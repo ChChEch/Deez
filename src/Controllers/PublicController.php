@@ -3,9 +3,9 @@
 namespace App\Controllers;
 class PublicController {
     public function home(){
-        $json = file_get_contents('posts.json');
-        $posts = json_decode($json, true);
-        view('home', compact('posts'));
+        $db = new App\DB;
+        $posts = $db->all('posts');
+        //view('home', compact('posts'));
         
     }
 }

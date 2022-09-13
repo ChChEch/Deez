@@ -10,7 +10,7 @@
                         </header>
                         <div class="card-content">
                             <div class="content"> 
-                                <?=$post['body']?>
+                                <?=$post->snippet()?>
                             </div>
                         </div>
                         <footer class="card-footer">
