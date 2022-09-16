@@ -10,7 +10,7 @@ class Router {
 
     public function __construct($method, $path){
         $this->method = $method;
-        $this->path = $path;
+        $this->path = parse_url($path)['path'];
     }
 
     public function match(){
@@ -31,5 +31,13 @@ class Router {
             'path' => $path,
             'action' => $action
         ];
+    }
+
+    public static function get($path, $action){
+        self::addRoute('GET' , $path, $action);
+    }
+
+    public static function post($path, $action){
+        self::addRoute('POST' , $path, $action);
     }
 }

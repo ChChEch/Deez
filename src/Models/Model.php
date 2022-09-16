@@ -4,26 +4,29 @@ namespace App\Models;
 
 use App\DB;
 
+class Model
+{
+    public static $table;
 
-class Post extends Model {
+    public static function all(){
 
-    public static $table = 'posts';
-
-    public $id;
-    public $title;
-    public $body;
-
-    public function snippet(){
-        return substr($this->body, 0, 50);
+        $db = new \App\DB;
+        return $db->all(static::$table, static::class);
     }
 
     public function save(){
         $db = new DB();
         $fields = get_object_vars($this);
+        unset($fields['id']);
         foreach ($fields as $key => $field){
             if($field === NULL){
                 unset($fields[$key]);
             }
+        }
+        if (!$this->id) {
+            $db->insert(static::$table, $fields);
+        } else {
+            $db->update($this->id, static::$table, $fields);
         }
         $db->insert(static::$table, $fields);
     }
@@ -32,4 +35,10 @@ class Post extends Model {
         $db = new DB();
         return $db->find($id, static::$table, static::class);
     }
+
+    public function delete(){
+        $db = new DB();
+        $db->delete($this->id, static::$table);
+    }
+
 }

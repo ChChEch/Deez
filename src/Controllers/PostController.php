@@ -2,24 +2,19 @@
 
 namespace App\Controllers;
 
+
+
+use App\Models\Post;
+
 class PostController {
 
     public function add(){
         if(trim($_POST['title']) && trim($_POST['body'])) {
-            if(file_exists('posts.json')){
-            $json = file_get_contents('posts.json');
-            $posts = json_decode($json, true);
-        }   else {
-            $posts = [];
-        }
-            $posts[] = [
-                'title' => $_POST['title'], 
-                'body' => $_POST['body']
-        ];
-            $json = json_encode($posts);
-            $file = fopen('posts.json', 'w');
-            fwrite($file, $json);
-            fclose($file);
+            $post = new Post();
+            $post->body = $_POST['body'];
+            $post->title = $_POST['title'];
+            $post->save();
+
         }
         
         header('Location: /');
@@ -31,5 +26,33 @@ class PostController {
 
         view('new');
 
+    }
+
+    public function show(){
+        $id = $_GET['id'];
+        $post = Post::find($id);
+        view('show' , compact('post'));
+    }
+
+    public function edit(){
+        $id = $_GET['id'];
+        $post = Post::find($id);
+        view('edit' , compact('post'));
+    }
+    public function update(){
+        $id = $_GET['id'];
+        $post = Post::find($id);
+        $post->body = $_POST['body'];
+        $post->title = $_POST['title'];
+        $post->save();
+        header('Location: /');
+        die();
+    }
+    public function delete(){
+        $id = $_GET['id'];
+        $post = Post::find($id);
+        $post->delete();
+        header('Location: /');
+        die();
     }
 }

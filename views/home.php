@@ -1,11 +1,11 @@
 
-<?php include('partials/header.php'); ?>
+<?php include(__DIR__ .'/partials/header.php'); ?>
             <a class="button is-primary" href="/new">New whatever</a>
                     <?php foreach($posts as $post): ?>
                     <div class="card">
                         <header class="card-header">
                             <p class="card-header-title">
-                                <?=$post['title']?>
+                                <?=$post->title?>
                         </p>
                         </header>
                         <div class="card-content">
@@ -14,9 +14,10 @@
                             </div>
                         </div>
                         <footer class="card-footer">
-                            <a href="#" class="card-footer-item">Delete</a>
+                            <a href="/posts/show?id=<?=$post->id?>" class="card-footer-item">Read less</a>
+                            <a href="/posts/edit?id=<?=$post->id?>" class="card-footer-item">Edit</a>
+                            <a href="/posts/delete?id=<?=$post->id?>" class="card-footer-item">Delete</a>
                         </footer>
                         </div>
                     <?php endforeach; ?>
-                </ul>
-<?php include('partials/footer.php'); ?>
+<?php include(__DIR__ .'/partials/footer.php'); ?>

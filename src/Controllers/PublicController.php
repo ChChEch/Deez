@@ -1,11 +1,14 @@
 <?php
 
 namespace App\Controllers;
+
+use App\Models\Post;
+
 class PublicController {
     public function home(){
-        $db = new App\DB;
-        $posts = $db->all('posts');
-        //view('home', compact('posts'));
+        $posts = Post::all();
+        // $users = User::all();
+        view('home', compact('posts'));
         
     }
 }
