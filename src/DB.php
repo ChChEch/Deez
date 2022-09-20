@@ -8,15 +8,13 @@ class DB {
     private $conn;
 
     public function __construct(){
-        try {
+
             $this->conn = new PDO('sqlite:database.sqlite');
             $this->conn->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
-        } catch (Exception $e){
-            var_dump($e);
-        }
 
     }
     public function all($table, $class=\stdClass::class){
+
         $stmt = $this->conn->prepare('SELECT * FROM ' . $table . ';');
         $stmt->execute();
         $stmt->setFetchMode(\PDO::FETCH_CLASS, $class);
@@ -40,6 +38,13 @@ class DB {
 
     public function find($id, $table, $class=\stdClass::class){
         $stmt = $this->conn->prepare('SELECT * FROM ' . $table . ' WHERE id=' . $id . ';');
+        $stmt->execute();
+        $stmt->setFetchMode(\PDO::FETCH_CLASS, $class);
+        return $stmt->fetch();
+    }
+
+    public function where($field, $value, $table, $class=\stdClass::class){
+        $stmt = $this->conn->prepare('SELECT * FROM ' . $table . ' WHERE $field=' . $value . ';');
         $stmt->execute();
         $stmt->setFetchMode(\PDO::FETCH_CLASS, $class);
         return $stmt->fetch();
